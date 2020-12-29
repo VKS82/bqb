@@ -1,9 +1,23 @@
 import pandas as pd
+import yaml
+import pathlib
 
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
+
+
+def load_players(ply_yaml='players.yaml'):
+    yml = pathlib.Path.cwd() / ply_yaml
+    player_dict = yaml.safe_load(yml.open())
+    return dict.fromkeys(player_dict['QBS'])
+
+
+def get_pfr_url(ply_dict):
+
+    return False
+
 
 def get_stats(pfr_url):
 
@@ -23,6 +37,9 @@ def get_stats(pfr_url):
 
     return qb_stats
 
+
 if __name__ == "__main__":
+    qbs = load_players()
+    print(qbs)
+
     test_url =  'https://www.pro-football-reference.com/players/H/HerbJu00.htm'
-    print(get_stats(test_url))
