@@ -1,5 +1,5 @@
 import urllib.request
-
+from load_players import load_players_file, filter_players
 
 class SDIWrapper:
 
@@ -9,6 +9,7 @@ class SDIWrapper:
         self._base_url = 'https://api.sportsdata.io/v3/nfl/'
         self.season = season
         self.week = week
+        self._player_dict = filter_players(load_players_file(), position='QB')
 
     def get_games_in_progress(self):
 
@@ -29,7 +30,10 @@ class SDIWrapper:
 
         return contents.getcode(), contents.read()
 
+    def load_players(self):
 
+
+        return True
 
 if __name__ == '__main__':
     from config import SDI_KEY

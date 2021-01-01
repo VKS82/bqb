@@ -3,7 +3,7 @@ import pathlib
 import sys
 
 
-def load_players():
+def load_players_file():
     json_file = pathlib.Path.cwd() / '../data' / 'Players.json'
     players = json.load(json_file.open())
 
