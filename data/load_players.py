@@ -4,7 +4,7 @@ import sys
 
 
 def load_players_file():
-    json_file = pathlib.Path.cwd() / '../data' / 'Players.json'
+    json_file = pathlib.Path.cwd() / 'SDI_Players.json'
     players = json.load(json_file.open())
 
     p_dict = {}
@@ -25,7 +25,7 @@ def filter_players(player_dict, position):
 
 
 if __name__ == '__main__':
-    p_dict = load_players()
+    p_dict = load_players_file()
     p_dict = filter_players(player_dict=p_dict, position='QB')
     print(sys.getsizeof(p_dict))
     print(len(p_dict))

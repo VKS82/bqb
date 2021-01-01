@@ -8,7 +8,7 @@ pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 
 
-def load_players(ply_yaml='players.yaml'):
+def load_players(ply_yaml='parameters.yaml'):
     yml = pathlib.Path.cwd() / ply_yaml
     player_dict = yaml.safe_load(yml.open())
     return dict.fromkeys(player_dict['QBS'])
