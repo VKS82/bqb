@@ -2,6 +2,9 @@ import pandas as pd
 import yaml
 import pathlib
 
+
+# Deprecated PFR scraper
+
 pd.set_option('display.max_rows', None)
 pd.set_option('display.max_columns', None)
 pd.set_option('display.width', None)

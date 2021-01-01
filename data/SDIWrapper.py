@@ -5,6 +5,12 @@ from load_players import load_players_file, filter_players
 class SDIWrapper:
 
     def __init__(self, api_key, season, week):
+        """
+        Wrapper for sportsdata.io NFL API
+        :param api_key: :type str,  API Key to access sportsdata.io
+        :param season: :type str, <YYYY><SEASON_STAGE> e.g. '2020REG', '2020PRE', '2020POST'
+        :param week: :type str, string integer 1-17 for regular season weeks, 1-4 for Post Season Weeks
+        """
 
         self._ak = api_key
         self._base_url = 'https://api.sportsdata.io/v3/nfl/'
@@ -13,14 +19,21 @@ class SDIWrapper:
         self._player_dict = filter_players(load_players_file(), position='QB')
 
     def get_games_in_progress(self):
-
+        """
+        Get Games in Progress
+        :return: status, response :type str 'true' or 'false'
+        """
         gip_url = 'scores/json/AreAnyGamesInProgress?key=<key>'
         contents = urllib.request.urlopen(self._base_url + gip_url.replace('<key>', self._ak, 1))
-        return contents.getcode(), contents.read()
+        return contents.getcode(), contents.read().decode("utf-8")
 
 
-    def get_player_game_stats(self, player_id):
-
+    def _get_player_game_stats(self, player_id):
+        """
+        Get a players game stats via player ID
+        :param player_id: :type str, sportsdata.io PlayerID e.g. '21677' for Tua Tagovailoa
+        :return: status, response in bytes
+        """
 
         gpg_url = self._base_url+'stats/json/PlayerGameStatsByPlayerID/<season>/<week>/<playerid>?key=<key>'
         gpg_url = gpg_url.replace('<season>', self.season, 1)
@@ -32,9 +45,13 @@ class SDIWrapper:
         return contents.getcode(), contents.read()
 
     def get_player_stats_name(self, player_name):
-         status, data = self.get_player_game_stats(player_id=self._player_dict[player_name]['PlayerID'])
-         return status, data
-
+        """
+        Get a player game stats via player_name
+        :param player_name:  :type str 'FirstName LastName'
+        :return: http_status, decoded http data
+        """
+        status, data = self._get_player_game_stats(player_id=self._player_dict[player_name]['PlayerID'])
+        return status, data.decode("utf-8")
 
 
 if __name__ == '__main__':
@@ -42,5 +59,4 @@ if __name__ == '__main__':
 
     GetStats = SDIWrapper(api_key=SDI_KEY, season='2020REG', week='16')
     print(GetStats.get_games_in_progress())
-    print(GetStats.get_player_game_stats(player_id='21677'))
     print(GetStats.get_player_stats_name(player_name='Lamar Jackson'))

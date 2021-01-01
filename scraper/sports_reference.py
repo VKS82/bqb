@@ -5,6 +5,9 @@ from sportsreference.nfl.boxscore import BoxscorePlayer
 from sportsreference.nfl.roster import PLAYER_URL
 import pandas as pd
 
+
+# Deprecated PFR scraper
+
 # saints = Roster('NOR', slim=True)
 # for player in saints.players:
 #     # Prints the name of all players who played for the New Orleans Saints
