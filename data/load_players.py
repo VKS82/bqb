@@ -11,7 +11,7 @@ def load_players_file():
     for p in players:
         name = p['FirstName'] + ' ' +p['LastName']
 
-        p_dict[name] ={'PlayerID': p['PlayerID'], 'Team': p['Team'], 'Position': p['Position']}
+        p_dict[name] ={'PlayerID': str(p['PlayerID']), 'Team': p['Team'], 'Position': p['Position']}
     return p_dict
 
 

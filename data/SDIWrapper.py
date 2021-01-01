@@ -1,6 +1,7 @@
 import urllib.request
 from load_players import load_players_file, filter_players
 
+
 class SDIWrapper:
 
     def __init__(self, api_key, season, week):
@@ -30,10 +31,11 @@ class SDIWrapper:
 
         return contents.getcode(), contents.read()
 
-    def load_players(self):
+    def get_player_stats_name(self, player_name):
+         status, data = self.get_player_game_stats(player_id=self._player_dict[player_name]['PlayerID'])
+         return status, data
 
 
-        return True
 
 if __name__ == '__main__':
     from config import SDI_KEY
@@ -41,3 +43,4 @@ if __name__ == '__main__':
     GetStats = SDIWrapper(api_key=SDI_KEY, season='2020REG', week='16')
     print(GetStats.get_games_in_progress())
     print(GetStats.get_player_game_stats(player_id='21677'))
+    print(GetStats.get_player_stats_name(player_name='Lamar Jackson'))
