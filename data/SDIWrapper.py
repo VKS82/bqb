@@ -55,8 +55,11 @@ class SDIWrapper:
 
 
 if __name__ == '__main__':
+    import coloredlogs, logging
     from config import SDI_KEY
 
+    logger = logging.getLogger(__name__)
+    coloredlogs.install(level='DEBUG', logger=logger)
     GetStats = SDIWrapper(api_key=SDI_KEY, season='2020REG', week='16')
-    print(GetStats.get_games_in_progress())
-    print(GetStats.get_player_stats_name(player_name='Lamar Jackson'))
+    logger.info(GetStats.get_games_in_progress())
+    logger.info(GetStats.get_player_stats_name(player_name='Lamar Jackson'))
