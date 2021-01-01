@@ -1,7 +1,7 @@
 import pandas as pd
 import yaml
 import pathlib
-
+from navigator.pfr_browser import get_pfr_page
 
 # Deprecated PFR scraper
 
@@ -12,14 +12,12 @@ pd.set_option('display.max_colwidth', None)
 
 
 def load_players(ply_yaml='parameters.yaml'):
-    yml = pathlib.Path.cwd() / ply_yaml
+    yml = pathlib.Path.cwd() /'..'/ ply_yaml
     player_dict = yaml.safe_load(yml.open())
     return dict.fromkeys(player_dict['QBS'])
 
 
-def get_pfr_url(ply_dict):
 
-    return False
 
 
 def get_stats(pfr_url):
@@ -43,6 +41,7 @@ def get_stats(pfr_url):
 
 if __name__ == "__main__":
     qbs = load_players()
+    for k in qbs.keys():
+        qbs[k] = get_pfr_page(k)
     print(qbs)
 
-    test_url =  'https://www.pro-football-reference.com/players/H/HerbJu00.htm'
