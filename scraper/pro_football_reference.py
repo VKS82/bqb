@@ -40,8 +40,10 @@ def get_stats(pfr_url):
 
 
 if __name__ == "__main__":
-    qbs = load_players()
-    for k in qbs.keys():
-        qbs[k] = get_pfr_page(k)
-    print(qbs)
+    # qbs = load_players()
+    # for k in qbs.keys():
+    #     qbs[k] = get_pfr_page(k)
+    # print(qbs)
+    cn = get_stats(pfr_url='https://www.pro-football-reference.com/players/N/NewtCa00/gamelog/2020/')
+    print(cn)
 
