@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from pathlib import PureWindowsPath
 
+
 def get_pfr_page(player_name):
     """
     Get Pro Football Reference Page for a player
@@ -28,6 +29,16 @@ def get_pfr_page(player_name):
     browser.quit()
 
     return link
+
+
+def get_game_log_page(link, year):
+    """
+    :param link: PFR player link
+    :param year: :type str Year in 'YYYY' format
+    :return: :type str PFR gamelog link for year
+    """
+    gl_str = 'gamelog/<year>/'.replace('<year>', year)
+    return link.replace('.htm',gl_str)
 
 
 if __name__=='__main__':
