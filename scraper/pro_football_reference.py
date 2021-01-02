@@ -1,20 +1,4 @@
 import pandas as pd
-import yaml
-import pathlib
-from navigator.pfr_browser import get_pfr_page
-
-
-pd.set_option('display.max_rows', None)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.width', None)
-pd.set_option('display.max_colwidth', None)
-
-
-def load_config(ply_yaml='parameters.yaml'):
-    yml = pathlib.Path.cwd() /'..'/ ply_yaml
-    params = yaml.safe_load(yml.open())
-    players = dict.fromkeys(params['QBS'])
-    return players, params
 
 
 def get_stats(pfr_url):
@@ -41,22 +25,5 @@ def get_week(df, week):
     df = df.loc[df['General','Week'] == str(week)]
     df.columns = df.columns.droplevel()
     return df
-
-if __name__ == "__main__":
-    qbs, par = load_config()
-    # for k in qbs.keys():
-    #     qbs[k] = get_pfr_page(k)
-    # print(qbs)
-
-
-    # cn = get_stats(pfr_url='https://www.pro-football-reference.com/players/N/NewtCa00/gamelog/2020/')
-    # print(cn)
-
-
-    # from bqtest.pfr_dict import pfr_dict
-    #
-    # df = get_stats(pfr_dict['Cam Newton'])
-    # df = get_week(df, week=12)
-    # print(df)
 
 
