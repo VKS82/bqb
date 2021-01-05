@@ -5,8 +5,9 @@ df_fh = open('df_list.obj', 'rb')
 
 df_list = pickle.load(df_fh)
 
-for d in df_list:
-    print(list(d))
+print(df_list.to_string())
+
+
 
 #df = pd.concat(df_list, ignore_index=True)
 

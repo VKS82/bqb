@@ -28,7 +28,8 @@ def main(loglevel='DEBUG'):
 
         df['Player'] = k
         df_list.append(df)
-    return df_list
+    player_stats = pd.concat(df_list, axis=0)
+    return player_stats
 
 
 if __name__ == '__main__':

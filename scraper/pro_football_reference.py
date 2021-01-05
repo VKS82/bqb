@@ -5,7 +5,7 @@ def get_stats(pfr_url):
 
     qb_stats = pd.read_html(pfr_url, attrs= {'id': 'stats'}, skiprows=0)
 
-    qb_stats = qb_stats[0].drop(qb_stats[0].iloc[:, 35:104], axis=1)
+    qb_stats = qb_stats[0]
 
     qb_stats.rename(columns={'Unnamed: 0_level_0': 'General'},level=0, inplace=True)
     qb_stats.rename(columns={'Unnamed: 1_level_0': 'General'},level=0, inplace=True)
@@ -14,11 +14,19 @@ def get_stats(pfr_url):
     qb_stats.rename(columns={'Unnamed: 4_level_0': 'General'},level=0, inplace=True)
     qb_stats.rename(columns={'Unnamed: 5_level_0': 'General'},level=0, inplace=True)
     qb_stats.rename(columns={'Unnamed: 6_level_0': 'General'},level=0, inplace=True)
-    qb_stats.rename(columns={'Unnamed: 22_level_0': 'Rush_TD_2'},level=0, inplace=True)
+    qb_stats.rename(columns={'Unnamed: 22_level_0': 'Total'},level=0, inplace=True)
     qb_stats.rename(columns={'Unnamed: 3_level_1': 'Home_Road'},level=1, inplace=True)
     qb_stats.rename(columns={'Unnamed: 29_level_0': 'Total'}, level=0, inplace=True)
     qb_stats.rename(columns={'Yds.1': 'Sack_Loss'}, level=1, inplace=True)
     qb_stats.columns = qb_stats.columns.map('|'.join).str.strip('|')
+
+    rcv_cols = ['Receiving|Tgt', 'Receiving|Rec', 'Receiving|Yds', 'Receiving|Y/R',
+                'Receiving|TD', 'Receiving|Ctch%', 'Receiving|Y/Tgt']
+
+    if rcv_cols[0] not in qb_stats.columns:
+        for rc in rcv_cols:
+            qb_stats[rc] = 0
+
     return qb_stats
 
 
