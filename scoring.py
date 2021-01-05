@@ -37,6 +37,10 @@ def main(loglevel='DEBUG'):
 if __name__ == '__main__':
     from calculate import calculate_score
     stats = main()
+    results = []
     for p in list(stats.index.values):
-        result = calculate_score(player=p, data=stats, rules=None)
-        print('Player : {}, BQB Score :  {}'.format(p, result))
+        results.append(calculate_score(player=p, data=stats, rules=None))
+
+    r_df = pd.DataFrame(results)
+    print(r_df.to_string())
+

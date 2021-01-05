@@ -1,7 +1,7 @@
 import pickle
 import pathlib
 import yaml
-import pandas as pd
+
 
 DF_COLS = ['General|Date', 'General|Week', 'General|Tm', 'General|Home_Road',
        'General|Opp', 'General|Result', 'General|GS', 'Passing|Cmp',
@@ -27,25 +27,26 @@ def calculate_score(player,data,rules=None):
     if not rules:
         rules = load_config()
 
-    score = 0
-    score += (int(data.at[player, 'Passing|Cmp'])*rules['Completion'][0]) // rules['Completion'][1]
+    scr_dict = {'Player': 0, 'Cmp': 0, 'Inc': 0, 'Sacks': 0,
+                'P_Yds': 0, 'P_TD': 0, 'R_Yds': 0, 'R_TD': 0, 'INT': 0, 'Fum': 0}
 
-    incompletions =  int(data.at[player, 'Passing|Att']) - int(data.at[player, 'Passing|Cmp'])
-    score += (incompletions* rules['Incompletion'][0]) // rules['Incompletion'][1]
+    scr_dict['Cmp'] = (int(data.at[player, 'Passing|Cmp'])*rules['Completion'][0]) // rules['Completion'][1]
+    incompletions = int(data.at[player, 'Passing|Att']) - int(data.at[player, 'Passing|Cmp'])
+    scr_dict['Inc'] = (incompletions* rules['Incompletion'][0]) // rules['Incompletion'][1]
+    scr_dict['Sacks'] = (int(data.at[player, 'Passing|Sk'])*rules['Sack'][0]) // rules['Sack'][1]
+    scr_dict['P_TD'] = (int(data.at[player, 'Passing|TD'])*rules['Pass_TD'][0]) // rules['Pass_TD'][1]
+    scr_dict['R_TD'] = (int(data.at[player, 'Rushing|TD']) * rules['Rush_TD'][0]) // rules['Rush_TD'][1]
+    scr_dict['P_Yds'] = (int(data.at[player, 'Passing|Yds']) * rules['Pass_Yards'][0]) // rules['Pass_Yards'][1]
+    scr_dict['R_Yds'] = (int(data.at[player, 'Rushing|Yds']) * rules['Rush_Yards'][0]) // rules['Rush_Yards'][1]
+    scr_dict['INT'] = (int(data.at[player, 'Passing|Int']) * rules['Interception'][0]) // rules['Interception'][1]
+    scr_dict['Fum'] = (int(data.at[player, 'Fumbles|Fmb']) * rules['Fumble'][0]) // rules['Fumble'][1]
 
-    score += (int(data.at[player, 'Passing|Sk'])*rules['Sack'][0]) // rules['Sack'][1]
+    scr_dict['Total'] = sum(list(scr_dict.values()))
 
-    score += (int(data.at[player, 'Passing|TD'])*rules['Pass_TD'][0]) // rules['Pass_TD'][1]
-    score += (int(data.at[player, 'Rushing|TD']) * rules['Rush_TD'][0]) // rules['Rush_TD'][1]
+    scr_dict['Player'] = player
 
-    score += (int(data.at[player, 'Passing|Yds']) * rules['Pass_Yards'][0]) // rules['Pass_Yards'][1]
-    score += (int(data.at[player, 'Rushing|Yds']) * rules['Rush_Yards'][0]) // rules['Rush_Yards'][1]
+    return scr_dict
 
-
-    score += (int(data.at[player, 'Passing|Int']) * rules['Interception'][0]) // rules['Interception'][1]
-    score += (int(data.at[player, 'Fumbles|Fmb']) * rules['Fumble'][0]) // rules['Fumble'][1]
-
-    return score
 
 if __name__ == '__main__':
     df_fh = open('df_list.obj', 'rb')
