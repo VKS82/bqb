@@ -29,11 +29,14 @@ def main(loglevel='DEBUG'):
         df['Player'] = k
         df_list.append(df)
     player_stats = pd.concat(df_list, axis=0)
+    player_stats = player_stats.set_index('Player')
+    player_stats = player_stats.fillna(0)
     return player_stats
 
 
 if __name__ == '__main__':
-    import pickle
-    df_list = main()
-    df_pi = open('df_list.obj', 'wb')
-    pickle.dump(df_list, df_pi)
+    from calculate import calculate_score
+    stats = main()
+    for p in list(stats.index.values):
+        result = calculate_score(player=p, data=stats, rules=None)
+        print('Player : {}, BQB Score :  {}'.format(p, result))
