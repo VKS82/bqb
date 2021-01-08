@@ -130,5 +130,5 @@ dmypy.json
 
 # Pycharm
 .idea
-config.py
+api/config.py
 chromedriver.exe

@@ -7,7 +7,7 @@ from scraper.pro_football_reference import get_stats, get_week
 
 
 def load_config(ply_yaml='parameters.yaml'):
-    yml = pathlib.Path.cwd() / ply_yaml
+    yml = pathlib.Path.cwd() /'..'/ ply_yaml
     params = yaml.safe_load(yml.open())
     players = dict.fromkeys(params['QBS'])
     return players, params
@@ -42,5 +42,6 @@ if __name__ == '__main__':
         results.append(calculate_score(player=p, data=stats, rules=None))
 
     r_df = pd.DataFrame(results)
+    r_df = r_df.set_index('Player')
     print(r_df.to_string())
-
+    print(stats.to_string())

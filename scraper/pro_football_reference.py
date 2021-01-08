@@ -26,7 +26,9 @@ def get_stats(pfr_url):
     if rcv_cols[0] not in qb_stats.columns:
         for rc in rcv_cols:
             qb_stats[rc] = 0
-
+    for col in qb_stats.columns:
+        if 'Unnamed' in col:
+            qb_stats.pop(col)
     return qb_stats
 
 

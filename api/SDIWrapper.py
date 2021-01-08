@@ -48,7 +48,7 @@ class SDIWrapper:
         """
         Get a player game stats via player_name
         :param player_name:  :type str 'FirstName LastName'
-        :return: http_status, decoded http data
+        :return: http_status, decoded http api
         """
         status, data = self._get_player_game_stats(player_id=self._player_dict[player_name]['PlayerID'])
         return status, data.decode("utf-8")
@@ -56,7 +56,7 @@ class SDIWrapper:
 
 if __name__ == '__main__':
     import coloredlogs, logging
-    from config import SDI_KEY
+    from api.config import SDI_KEY
 
     logger = logging.getLogger(__name__)
     coloredlogs.install(level='DEBUG', logger=logger)
