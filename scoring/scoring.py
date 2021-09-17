@@ -25,7 +25,6 @@ def main(loglevel='DEBUG'):
         logger.debug('QB | URL : {}'.format(qbs[k]))
         df = get_stats(pfr_url=qbs[k][0])
         df = get_week(df, week=params['Week'])
-
         df['Player'] = k
         df_list.append(df)
     player_stats = pd.concat(df_list, axis=0)

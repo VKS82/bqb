@@ -10,6 +10,12 @@ def get_pfr_page(player_name):
     :param player_name :type str 'FirstName LastName' of a player
     :return: link :type str link to player's PFR page
     """
+    if player_name == 'Josh Allen':
+        return 'https://www.pro-football-reference.com/players/A/AlleJo02.htm'
+    if player_name == 'Trevor Lawrence':
+        return 'https://www.pro-football-reference.com/players/L/LawrTr00.htm'
+    if player_name == 'Justin Herbert':
+        return 'https://www.pro-football-reference.com/players/H/HerbJu00.htm'
     link = None
     chrome_driver = PureWindowsPath('C:/Projects/bqb/navigator/chromedriver.exe')
     co = Options()

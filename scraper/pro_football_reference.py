@@ -3,9 +3,8 @@ import pandas as pd
 
 def get_stats(pfr_url):
 
-    qb_stats = pd.read_html(pfr_url, attrs= {'id': 'stats'}, skiprows=0)
+    qb_stats = pd.read_html(pfr_url)[0]
 
-    qb_stats = qb_stats[0]
 
     qb_stats.rename(columns={'Unnamed: 0_level_0': 'General'},level=0, inplace=True)
     qb_stats.rename(columns={'Unnamed: 1_level_0': 'General'},level=0, inplace=True)
@@ -38,7 +37,7 @@ def get_week(df, week):
 
 
 if __name__=='__main__':
-    df = get_stats(pfr_url='https://www.pro-football-reference.com/players/N/NewtCa00.htm')
-    print(df.to_string())
-    week = get_week(df,week='12')
+    df = get_stats(pfr_url='https://www.pro-football-reference.com/players/J/JackLa00.htm#stats')
+    print(df)
+    week = get_week(df,week='1')
     print(week.to_string())
