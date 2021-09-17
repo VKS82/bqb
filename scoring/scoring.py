@@ -42,5 +42,6 @@ if __name__ == '__main__':
 
     r_df = pd.DataFrame(results)
     r_df = r_df.set_index('Player')
+    r_df = r_df.sort_values(by='Score_Total', ascending=False)
     print(r_df.to_string())
     print(stats.to_string())

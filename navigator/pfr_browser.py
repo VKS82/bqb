@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 from pathlib import PureWindowsPath
-
+from selenium.common.exceptions import *
 
 def get_pfr_page(player_name):
     """
@@ -28,8 +28,12 @@ def get_pfr_page(player_name):
 
     elem = browser.find_element_by_name('search')
     elem.send_keys(player_name + Keys.RETURN)
-
-    elem = browser.find_element_by_link_text(player_name)
+    try:
+        elem = browser.find_element_by_link_text(player_name)
+    except NoSuchElementException:
+        first, last = player_name.split(sep=' ')
+        link = 'https://www.pro-football-reference.com/players/{}/{}{}00.htm'.format(last[0], last[0:4], first[0:2])
+        return link
 
     link = elem.get_attribute('href')
     browser.quit()
